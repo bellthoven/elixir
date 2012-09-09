@@ -169,7 +169,15 @@ defmodule BinaryTest do
   test :first do
     assert Binary.first("") == nil
     assert Binary.first("abc") == 97
+    # UTF-8 ã == C3 A3 // C3 == 195
     assert Binary.first("ã") == 195
+  end
+
+  test :last do
+    assert Binary.last("") == nil
+    assert Binary.last("cba") == 97
+    # UTF-8 ã == C3 A3 // A3 == 163
+    assert Binary.last("ã") == 163
   end
 
 end

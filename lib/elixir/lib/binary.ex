@@ -338,6 +338,20 @@ defmodule Binary do
     Erlang.binary.first(data)
   end
 
+  @doc """
+  Returns the last by from the given binary.
+
+  ## Examples
+
+      > Binary.last("cba") #=> 97
+      > Binary.last("") #=> nil
+
+  """
+  def last(<<>>), do: nil
+  def last(<<data|:binary>>) do
+    Erlang.binary.last(data)
+  end
+
   ## Helpers
 
   defp do_escape(<<char, t|:binary>>, char) do
