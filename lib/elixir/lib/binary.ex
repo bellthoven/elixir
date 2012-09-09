@@ -325,6 +325,19 @@ defmodule Binary do
     Erlang.binary.copy(data, n)
   end
 
+  @doc """
+  Returns the first byte from the given binary.
+
+  ## Examples
+
+      > Binary.first("abc") #=> 97
+      > Binary.first("") #=> nil
+  """
+  def first(<<>>), do: nil
+  def first(<<data|:binary>>) do 
+    Erlang.binary.first(data)
+  end
+
   ## Helpers
 
   defp do_escape(<<char, t|:binary>>, char) do

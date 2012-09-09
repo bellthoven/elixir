@@ -166,5 +166,10 @@ defmodule BinaryTest do
     assert Binary.duplicate("abc", 2) == "abcabc"
   end
 
+  test :first do
+    assert Binary.first("") == nil
+    assert Binary.first("abc") == 97
+    assert Binary.first("ã") == 195
+  end
 
 end
