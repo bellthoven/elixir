@@ -352,6 +352,26 @@ defmodule Binary do
     Erlang.binary.last(data)
   end
 
+  @doc """
+  Returns the byte in `position` of the `data`.
+
+  ## Examples
+
+      > Binary.at("abc", 0) #=> 97
+      > Binary.at("abc", 100) #=> nil
+      > Binary.at("cba", -1) #=> 97
+
+  """
+  def at(data, position) when is_integer(position) do
+    size = size(data)
+    real_pos = if position >= 0,
+      do: position,
+      else: size - abs(position)
+    if real_pos < 0 or real_pos >= size,
+      do: nil,
+      else: Erlang.binary.at(data, real_pos)
+  end
+
   ## Helpers
 
   defp do_escape(<<char, t|:binary>>, char) do

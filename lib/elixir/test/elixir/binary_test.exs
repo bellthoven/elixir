@@ -180,4 +180,13 @@ defmodule BinaryTest do
     assert Binary.last("ã") == 163
   end
 
+  test :at do
+    assert Binary.at("abc", 0) == 97
+    assert Binary.at("cba", 2) == 97
+    assert Binary.at("abc", 100) == nil
+    assert Binary.at("cba", -1) == 97
+    assert Binary.at("cba", -100) == nil
+    assert Binary.at("", 0) == nil
+  end
+
 end
