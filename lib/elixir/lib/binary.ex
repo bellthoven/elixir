@@ -290,7 +290,7 @@ defmodule Binary do
   end
 
   @doc """
-  Returns a new string based on `subject` by replacing the parts
+  Returns a new binary based on `subject` by replacing the parts
   matching `pattern` for `replacement`. If `options` is specified
   with `[global: true]`, then it will replace all matches, otherwise
   it will replace just the first one.

@@ -154,7 +154,6 @@ defmodule BinaryTest do
   end
 
   test :replace_with_options do
-    # Global
     assert Binary.replace("a,b,c", ",", "-", global: true) == "a-b-c"
     assert Binary.replace("a,b,c", [",","b"], "-", global: true) == "a---c"
     assert Binary.replace("a,b,c", "b", "[]", insert_replaced: 1) == "a,[b],c"
