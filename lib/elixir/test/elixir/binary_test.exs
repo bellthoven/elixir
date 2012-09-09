@@ -162,5 +162,10 @@ defmodule BinaryTest do
     assert Binary.replace("a,b,c", ",", "[]", global: true, insert_replaced: [1,1]) == "a[,,]b[,,]c"
   end
 
+  test :duplicate do
+    assert Binary.duplicate("abc", 1) == "abc"
+    assert Binary.duplicate("abc", 2) == "abcabc"
+  end
+
 
 end

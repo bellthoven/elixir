@@ -313,6 +313,18 @@ defmodule Binary do
     Erlang.binary.replace(subject, pattern, replacement, real_options)
   end
 
+  @doc """
+  Returns a binary with `data` duplicated `n` times.
+
+  ## Examples
+
+      > Binary.duplicate("abc", 1) #=> "abc"
+      > Binary.duplicate("abc", 2) #=> "abcabc"
+  """
+  def duplicate(data, n) when is_integer(n) and n > 0 do
+    Erlang.binary.copy(data, n)
+  end
+
   ## Helpers
 
   defp do_escape(<<char, t|:binary>>, char) do
