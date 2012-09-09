@@ -289,6 +289,30 @@ defmodule Binary do
     Erlang.elixir_interpolation.unescape_tokens(tokens, map)
   end
 
+  @doc """
+  Returns a new string based on `subject` by replacing the parts
+  matching `pattern` for `replacement`. If `options` is specified
+  with `[global: true]`, then it will replace all matches, otherwise
+  it will replace just the first one.
+
+  For the replaced part must be used in `replacement`, then the
+  position or the positions where it is to be inserted must be specified by using
+  the option `insert_replaced`.
+
+  ## Examples
+
+      > Binary.replace("a,b,c", ",", "-") #=> "a-b,c"
+      > Binary.replace("a,b,c", ",", "-", global: true) #=> "a-b-c"
+      > Binary.replace("a,b,c", "b", "[]", insert_replaced: 1) #=> "a,[b],c"
+      > Binary.replace("a,b,c", ",", "[]", globa: true, insert_replaced: 2) #=> "a[],b[],c"
+      > Binary.replace("a,b,c", ",", "[]", globa: true, insert_replaced: [1,1]) #=> "a[,,]b[,,]c"
+
+  """
+  def replace(subject, pattern, replacement, options // []) do
+    real_options = translate_replace_options(options)
+    Erlang.binary.replace(subject, pattern, replacement, real_options)
+  end
+
   ## Helpers
 
   defp do_escape(<<char, t|:binary>>, char) do
@@ -322,4 +346,20 @@ defmodule Binary do
   defp escape_map(?\\), do: ?\\
   defp escape_map(?\t), do: ?t
   defp escape_map(?\v), do: ?v
+
+  defp translate_replace_options([]) do
+    []
+  end
+
+  defp translate_replace_options(options) do
+    translated_options = []
+    if options[:global] == true do
+      translated_options = List.concat(translated_options, [:global])
+    end
+    if options[:insert_replaced] != nil do
+      translated_options = List.concat(translated_options, [{:insert_replaced, options[:insert_replaced]}])
+    end
+    translated_options
+  end
+
 end

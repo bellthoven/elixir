@@ -147,4 +147,20 @@ defmodule BinaryTest do
     assert Binary.split("a,b,c", %r{,}, global: true) == ["a", "b", "c"]
     assert Binary.split("a,b", %r{\.}) == ["a,b"]
   end
+
+  test :replace do
+    assert Binary.replace("a,b,c", ",", "-") == "a-b,c"
+    assert Binary.replace("a,b,c", [",", "b"], "-") == "a-b,c"
+  end
+
+  test :replace_with_options do
+    # Global
+    assert Binary.replace("a,b,c", ",", "-", global: true) == "a-b-c"
+    assert Binary.replace("a,b,c", [",","b"], "-", global: true) == "a---c"
+    assert Binary.replace("a,b,c", "b", "[]", insert_replaced: 1) == "a,[b],c"
+    assert Binary.replace("a,b,c", ",", "[]", global: true, insert_replaced: 2) == "a[],b[],c"
+    assert Binary.replace("a,b,c", ",", "[]", global: true, insert_replaced: [1,1]) == "a[,,]b[,,]c"
+  end
+
+
 end
